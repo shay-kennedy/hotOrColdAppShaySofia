@@ -5,6 +5,8 @@ var app = express();
 
 app.use(bodyParser.json());
 
+var score = Infinity;
+
 app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET,POST');
@@ -13,13 +15,17 @@ app.use(function(req, res, next) {
 });
 
 app.post("/fewest-guesses", function(req, res) {
+	score = (req.body.score < score)? req.body.score : score;
 	res.json({
-		guessCount: req.body	
+		score: req.body.score	
 	})
 });
 app.get('/fewest-guesses', function(req, res){
-	 res.sendFile(__dirname + '/bd.json');
-	 console.log(__dirname);
+
+	res.json({
+		score: score
+	})
+
 });
 
 app.listen(8080, function() {

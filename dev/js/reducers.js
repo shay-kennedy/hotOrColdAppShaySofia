@@ -39,7 +39,7 @@ var hotOrColdReducer = function(state, currentAction) {
          
         if (state.number == currentAction.usersGuess) {
             compareGuess = "you win!";
-            fewestGuesses = state.guessCount + 1;
+            // fewestGuesses = state.guessCount + 1;
         } else if (gapNumber <= 10 && gapNumber >= 1) {
             compareGuess = 'you are very hot';
         } else if (gapNumber <= 20 && gapNumber >= 11) {
@@ -62,6 +62,12 @@ var hotOrColdReducer = function(state, currentAction) {
         });
 
         return newState;
+    }
+    else if (action.type === actions.FETCH_FEWEST_GUESSES) {
+        
+    }
+    else if (action.type === actions.SAVE_FEWEST_GUESSES) {
+        
     }
 
     return state;
