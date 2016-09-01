@@ -1,0 +1,8 @@
+{
+	"source": {
+	   "include": ["dev/js"],
+		"exclude": [],
+	    "includePattern": ".+\\.js(doc)?$",
+	    "excludePattern": "(^|\\/|\\\\)_"
+	}
+}
