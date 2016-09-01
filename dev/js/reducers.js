@@ -9,7 +9,8 @@ var initialState = {
     usersGuess: 0,
     compareGuess: 'Make a Guess',
     guessCount: 0,
-    guessList: []
+    guessList: [],
+    fewestGuesses: 0
 };
 
 var hotOrColdReducer = function(state, currentAction) {
@@ -20,7 +21,8 @@ var hotOrColdReducer = function(state, currentAction) {
             usersGuess: {$set: 0},
             compareGuess: {$set: 'Make a Guess'},
             guessCount: {$set: 0},
-            guessList: {$set: []}
+            guessList: {$set: []},
+            // fewestGuesses: {$set: 0}
         });
 
         return newState;
@@ -32,10 +34,12 @@ var hotOrColdReducer = function(state, currentAction) {
         }
         
         var compareGuess = '';
+        var fewestGuesses;
         var gapNumber = (Math.abs(currentAction.usersGuess - state.number));
-
+         
         if (state.number == currentAction.usersGuess) {
             compareGuess = "you win!";
+            fewestGuesses = state.guessCount + 1;
         } else if (gapNumber <= 10 && gapNumber >= 1) {
             compareGuess = 'you are very hot';
         } else if (gapNumber <= 20 && gapNumber >= 11) {
@@ -47,14 +51,14 @@ var hotOrColdReducer = function(state, currentAction) {
         } else {
             compareGuess = 'you are very cold';
         }
-
+        
         var guessCounter = state.guessCount + 1;
- 
         var newState = update(state, {
             usersGuess: {$set: currentAction.usersGuess},
             guessCount: {$set: guessCounter},
             guessList: {$push: [currentAction.usersGuess]},
             compareGuess: {$set: compareGuess},
+            fewestGuesses: {$set: fewestGuesses}
         });
 
         return newState;

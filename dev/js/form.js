@@ -20,6 +20,10 @@ var Form= React.createClass({
 		e.preventDefault();
 		var guessValue = this.refs.inputValue.value;
 		console.log(guessValue);
+    	if (guessValue < 1 || guessValue > 100|| isNaN(guessValue) || guessValue === undefined) {
+          alert('Please enter an integer between 1 and 100');
+          return;
+        }
 		this.props.dispatch(actions.userGuess(guessValue));
 		this.refs.inputValue.value = '';
 	},

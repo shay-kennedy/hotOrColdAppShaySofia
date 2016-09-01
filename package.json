@@ -31,7 +31,10 @@
     "watch:js:unminified": "npm run build:js:unminified && webpack --watch"
   },
   "babel": {
-    "presets": ["es2015", "react"]
+    "presets": [
+      "es2015",
+      "react"
+    ]
   },
   "author": "",
   "license": "ISC",
@@ -58,6 +61,7 @@
     "webpack-livereload-plugin": "^0.8.2"
   },
   "dependencies": {
+    "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "react": "^15.3.1",

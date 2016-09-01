@@ -26,6 +26,7 @@ var Game = React.createClass({
 				<ul>
 					{passGuess}
 				</ul>
+				<div>FewestGuesses: {this.props.fewestGuesses}</div>
 				<NewGame newGame={this.restartGame} />	
 			</div>
 		)
@@ -37,7 +38,8 @@ var mapStateToProps = function(state, props) {
         feedback: state.compareGuess,
         counter: state.guessCount,
         guesses: state.guessList,
-        secretNumber: state.number 
+        secretNumber: state.number,
+        fewestGuesses: state.fewestGuesses 
 
     };
 };
