@@ -75,6 +75,10 @@ exports.FETCH_FEWEST_GUESSES = FETCH_FEWEST_GUESSES;
 exports.fetchFewestGuesses = fetchFewestGuesses;
 exports.SAVE_FEWEST_GUESSES = SAVE_FEWEST_GUESSES;
 exports.saveFewestGuesses = saveFewestGuesses;
+exports.FETCH_FEWEST_GUESSES_SUCCESS = FETCH_FEWEST_GUESSES_SUCCESS;
+exports.fetchFewestGuessesSuccess = fetchFewestGuessesSuccess;
+exports.FETCH_FEWEST_GUESSES_ERROR = FETCH_FEWEST_GUESSES_ERROR;
+exports.fetchFewestGuessesError = fetchFewestGuessesError;
 
 var fetchGuesses = function() {
     return function(dispatch) {
@@ -85,7 +89,7 @@ var fetchGuesses = function() {
                 error.response = response
                 throw error;
             }
-            return response.json;
+            return response.json();
         })
   
         .then(function(data) {
@@ -97,9 +101,43 @@ var fetchGuesses = function() {
         })
         .catch(function(error) {
             var error = "error";
-            return error;
+            return dispatch(
+                fetchFewestGuessesError(error)
+            );
         });
     }
 };
 
-exports.fetchDescription = fetchDescription;
+var saveGuesses = function() {
+    return function(dispatch) {
+        var url = 'http://localhost:8080/fewest-guesses';
+        return fetch(url, {
+            method: 'post',
+            headers: {
+                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+            },
+            body: {"count": 4}
+    }).then(function(response) {
+            if (response.status < 200 || response.status >= 300) {
+                var error = new Error(response.statusText)
+                error.response = response
+                throw error;
+            }
+        return response.json();
+    })
+    .then(function(data) {
+        var guess = data.body.count;
+        return dispatch(
+            saveFewestGuesses(guess)
+        );
+    })
+    .catch(function(error) {
+        var error = "error";
+        return dispatch(
+            fetchFewestGuessesError(error)
+        );
+    });
+};
+
+exports.saveGuesses = saveGuesses;
+exports.fetchGuesses = fetchGuesses;
